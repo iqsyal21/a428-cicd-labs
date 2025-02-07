@@ -5,7 +5,15 @@ pipeline {
             args '-p 3000:3000'
         }
     }
+    triggers {
+        pollSCM('H/2 * * * *') // Cek commit baru setiap 2 menit
+    }
     stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'reat-app', url: '/home/Documents/develop/learn-devops/a428-cicd-labs'
+            }
+        }
         stage('Build') {
             steps {
                 sh 'npm install'
@@ -18,12 +26,12 @@ pipeline {
         }
         stage('Deploy') { 
             steps {
-                sh './jenkins/scripts/deliver.sh' 
+                sh './jenkins/scripts/deliver.sh'
 
                 echo 'Aplikasi berjalan selama 1 menit...'
-                sleep(time: 60, unit: 'SECONDS')  
+                sleep(time: 60, unit: 'SECONDS')  // Menunggu 1 menit
                 
-                sh './jenkins/scripts/kill.sh' 
+                sh './jenkins/scripts/kill.sh'
             }
         }
     }
