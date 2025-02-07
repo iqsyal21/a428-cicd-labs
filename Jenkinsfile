@@ -9,11 +9,6 @@ pipeline {
         pollSCM('H/2 * * * *') // Cek commit baru setiap 2 menit
     }
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'reat-app', url: '/home/Documents/develop/learn-devops/a428-cicd-labs'
-            }
-        }
         stage('Build') {
             steps {
                 sh 'npm install'
