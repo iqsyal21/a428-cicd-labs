@@ -17,12 +17,12 @@ node {
 
     stage('Manual Approve') {
         script {
-            def userInput = input message: 'Hentikan Deploy?', 
+            def userInput = input message: 'Lanjutkan ke tahap Deploy?', 
                 parameters: [
-                    choice(name: 'Pilih', choices: ['Ya', 'Tidak'], description: 'Pilih "Ya" untuk menghentikan deploy, atau "Tidak" untuk lanjut ke deploy.')
+                    choice(name: 'Pilih', choices: ['Ya', 'Tidak'], description: 'Pilih "Ya" untuk lanjut deploy, atau "Tidak" untuk selesai.')
                 ]
 
-            if (userInput == 'Ya') {
+            if (userInput == 'Tidak') {
                 echo "Deploy dihentikan oleh user."
                 docker.image('node:16-buster-slim').inside('-p 3000:3000') {
                     sh './jenkins/scripts/kill.sh'
