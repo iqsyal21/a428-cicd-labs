@@ -16,16 +16,8 @@ node {
     }
 
     stage('Manual Approve') {
-        script {
-            def userInput = input message: 'Lanjutkan ke tahap Deploy?', 
-                parameters: [
-                    choice(name: 'Pilih', choices: ['Ya', 'Tidak'], description: 'Pilih "Ya" untuk lanjut deploy, atau "Tidak" untuk selesai.')
-                ]
-
-            if (userInput == 'Tidak') {
-                echo "Deploy dihentikan oleh user."
-                error "Pipeline dihentikan sesuai permintaan."
-            }
+        docker.image('node:16-buster-slim').inside('-p 3000:3000') {
+            input message: 'Lanjutkan ke tahap Deploy? (Klik "Abort" untuk mengakhiri)'
         }
     }
 
