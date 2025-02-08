@@ -24,9 +24,6 @@ node {
 
             if (userInput == 'Tidak') {
                 echo "Deploy dihentikan oleh user."
-                docker.image('node:16-buster-slim').inside('-p 3000:3000') {
-                    sh './jenkins/scripts/kill.sh'
-                }
                 error "Pipeline dihentikan sesuai permintaan."
             }
         }
