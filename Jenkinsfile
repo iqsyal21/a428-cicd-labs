@@ -15,12 +15,6 @@ node {
         }
     }
 
-    stage('Manual Approve') {
-        input message: 'hentikan Deploy? (Klik "Proceed" untuk mengakhiri)'
-        
-        sh './jenkins/scripts/kill.sh'
-    }
-
     stage('Deploy') {
         docker.image('node:16-buster-slim').inside('-p 3000:3000') {
             sh './jenkins/scripts/deliver.sh'
